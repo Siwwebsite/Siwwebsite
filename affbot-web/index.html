@@ -1,0 +1,139 @@
+affbot-web/
+├── index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AffBot Shop Picks</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 Today's Trendy Picks 🔥</h1>
+    <div id="product-grid"></div>
+    <p class="credit">Powered by <a href="https://shope.ee/mg0_yx035l" target="_blank">Affiliate Link</a></p>
+  </div>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+├── style.css
+body {
+  font-family: sans-serif;
+  background: #eee url("images/bear-bg.png") no-repeat center fixed;
+  background-size: contain;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+#product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.product {
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.product:hover {
+  transform: scale(1.05);
+}
+
+.product a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.credit {
+  text-align: center;
+  margin-top: 2rem;
+}
+├── script.js
+function getRandomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateFakeProducts(num = 120) {
+  const grid = document.getElementById("product-grid");
+  grid.innerHTML = "";
+
+  for (let i = 0; i < num; i++) {
+    const category = getRandomItem(PRODUCT_CATEGORIES);
+    const title = `${category.toUpperCase()} #${Math.floor(Math.random() * 1000)}`;
+    const url = `${AFFILIATE_BASE}?product=${encodeURIComponent(title)}&utm_campaign=affbot`;
+
+    const div = document.createElement("div");
+    div.className = "product";
+    div.innerHTML = `<a href="${url}" target="_blank">${title}</a>`;
+    grid.appendChild(div);
+  }
+}
+
+function shouldDisplayNow() {
+  const now = new Date();
+  const hour = now.getHours();
+  const restDay = now.getDay() === Math.floor(Math.random() * 7);
+  return (hour >= 6 && hour < 24) && !restDay;
+}
+
+if (shouldDisplayNow()) {
+  generateFakeProducts();
+} else {
+  document.body.innerHTML = "<h1 style='text-align:center;margin-top:5rem;'>🚫 Site is resting. Back at 6 AM!</h1>";
+}
+├── config.js
+const AFFILIATE_BASE = "https://shope.ee/mg0_yx035l";
+const PRODUCT_CATEGORIES = [
+  "student supplies",
+  "room decoration",
+  "fashion for teens",
+  "cool gadgets",
+  "stationery",
+  "anime gifts"
+];
+├── images/logo.png
+│   └── bear-bg.png
+├── README.md
+# Affbot Web
+
+🔥 เว็บแนะนำสินค้า Shopee + ระบบแชร์ลิงก์ Affiliate แบบอัตโนมัติ
+
+## ✅ ฟีเจอร์หลัก
+- ใส่ลิงก์สินค้า Shopee ได้
+- สร้างลิงก์ Affiliate อัตโนมัติ
+- แสดงปุ่มแชร์ (LINE, Facebook)
+- รองรับมือถือ 100%
+
+## 🚀 วิธีใช้
+1. เปิด `index.html` บนเบราว์เซอร์
+2. ใส่ลิงก์ Shopee ที่คุณต้องการแชร์
+3. กดปุ่มสร้างลิงก์
+4. แชร์ให้เพื่อนแล้วรอรับค่าคอม
+
+## 🧠 ผู้พัฒนา
+พัฒนาโดย [Siw Jj] เพื่อใช้งานจริงบนมือถือ
+
+## 📁 โครงสร้างไฟล์
+ตามนี้เลย:
+- `index.html` หน้าเว็บหลัก
+- `style.css` ไฟล์ตกแต่ง
+- `script.js` ระบบสร้างลิงก์
+- `images/logo.png` โลโก้ของเว็บ
